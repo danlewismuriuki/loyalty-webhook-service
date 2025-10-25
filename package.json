@@ -1,0 +1,17 @@
+{
+  "name": "loyalty-webhook-service",
+  "version": "1.0.0",
+  "description": "A serverless, event-driven loyalty and rewards platform built on AWS Free Tier services. Designed for businesses to manage customer loyalty programs, points tracking, campaigns, and multi-channel notifications.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^24.9.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
