@@ -68,42 +68,43 @@ The **Loyalty & Rewards System** is a serverless backend platform enabling busin
 ### High-Level Architecture Diagram
 
 ```mermaid
+%%{init: {'theme':'neutral'}}%%
 graph TB
     subgraph external["EXTERNAL SYSTEMS"]
-        clients[Client Apps<br/>Admin/Mobile/POS]
-        webhooks[Third-Party Webhooks<br/>Payment/CRM Systems]
+        clients["Client Apps<br/>Admin/Mobile/POS"]
+        webhooks["Third-Party Webhooks<br/>Payment/CRM Systems"]
     end
 
     subgraph aws_free["FREE TIER SERVICES"]
-        apigw[API Gateway REST<br/>1M requests/month FREE<br/>Webhook + API Endpoints<br/>Built-in throttling]
+        apigw["API Gateway REST<br/>1M requests/month FREE<br/>Webhook + API Endpoints<br/>Built-in throttling"]
 
-        lambda_webhook[Lambda Functions<br/>1M invocations/month FREE<br/>Webhook Handler + Idempotency]
-        lambda_api[Lambda Functions<br/>Order/User/Campaign/Points APIs]
-        lambda_worker[Lambda Functions<br/>Campaign Workers<br/>Async via SQS]
+        lambda_webhook["Lambda Functions<br/>1M invocations/month FREE<br/>Webhook Handler + Idempotency"]
+        lambda_api["Lambda Functions<br/>Order/User/Campaign/Points APIs"]
+        lambda_worker["Lambda Functions<br/>Campaign Workers<br/>Async via SQS"]
 
-        dynamodb[DynamoDB<br/>25GB storage FREE<br/>Single Table Design<br/>Streams for events<br/>TTL for sessions]
+        dynamodb["DynamoDB<br/>25GB storage FREE<br/>Single Table Design<br/>Streams for events<br/>TTL for sessions"]
 
-        sqs_standard[SQS Standard<br/>1M requests FREE<br/>Campaign Jobs Queue]
-        sqs_fifo[SQS FIFO<br/>Notification Queue<br/>Message deduplication]
-        sqs_dlq[SQS DLQ<br/>Failed message handling]
+        sqs_standard["SQS Standard<br/>1M requests FREE<br/>Campaign Jobs Queue"]
+        sqs_fifo["SQS FIFO<br/>Notification Queue<br/>Message deduplication"]
+        sqs_dlq["SQS DLQ<br/>Failed message handling"]
 
-        s3[S3 Storage<br/>5GB FREE<br/>Webhook logs<br/>Notification templates<br/>Backup exports]
+        s3["S3 Storage<br/>5GB FREE<br/>Webhook logs<br/>Notification templates<br/>Backup exports"]
 
-        sns[SNS Topics<br/>1M publishes FREE<br/>Email notifications<br/>SMS fallback]
-        ses[SES Email<br/>62,000 emails/month FREE<br/>Transactional emails]
+        sns["SNS Topics<br/>1M publishes FREE<br/>Email notifications<br/>SMS fallback"]
+        ses["SES Email<br/>62,000 emails/month FREE<br/>Transactional emails"]
 
-        cloudwatch[CloudWatch Logs<br/>5GB ingestion FREE<br/>Basic metrics<br/>Alarms for DLQ]
+        cloudwatch["CloudWatch Logs<br/>5GB ingestion FREE<br/>Basic metrics<br/>Alarms for DLQ"]
 
-        eventbridge[EventBridge<br/>FREE for AWS events<br/>Order/User/Points routing]
+        eventbridge["EventBridge<br/>FREE for AWS events<br/>Order/User/Points routing"]
     end
 
     subgraph logic["APPLICATION LOGIC IN LAMBDA"]
-        orderSvc[Order Service<br/>Create/Update Orders<br/>Emit events to EventBridge]
-        userSvc[User Service<br/>Profile Management<br/>Store in DynamoDB]
-        campaignSvc[Campaign Service<br/>Rule Engine in Lambda<br/>Config in DynamoDB]
-        pointsSvc[Points Service<br/>Transaction Ledger<br/>DynamoDB transactions]
-        notifSvc[Notification Service<br/>SNS/SES integration<br/>Template from S3]
-        cacheSvc[Cache Layer<br/>DynamoDB as cache<br/>TTL for expiration<br/>GSI for fast lookups]
+        orderSvc["Order Service<br/>Create/Update Orders<br/>Emit events to EventBridge"]
+        userSvc["User Service<br/>Profile Management<br/>Store in DynamoDB"]
+        campaignSvc["Campaign Service<br/>Rule Engine in Lambda<br/>Config in DynamoDB"]
+        pointsSvc["Points Service<br/>Transaction Ledger<br/>DynamoDB transactions"]
+        notifSvc["Notification Service<br/>SNS/SES integration<br/>Template from S3"]
+        cacheSvc["Cache Layer<br/>DynamoDB as cache<br/>TTL for expiration<br/>GSI for fast lookups"]
     end
 
     clients --> apigw
@@ -160,13 +161,6 @@ graph TB
     orderSvc --> cloudwatch
 
     dynamodb -->|Streams| lambda_worker
-
-    style external fill:#e3f2fd
-    style aws_free fill:#c8e6c9
-    style logic fill:#fff9c4
-
-    classDef freeService fill:#a5d6a7,stroke:#388e3c,stroke-width:3px
-    class apigw,lambda_webhook,lambda_api,lambda_worker,dynamodb,sqs_standard,sqs_fifo,sqs_dlq,s3,sns,ses,cloudwatch,eventbridge freeService
 ```
 
 ### Architecture Highlights
