@@ -1,4 +1,4 @@
-# 🎁 Loyalty & Rewards System
+# Loyalty & Rewards System
 
 A serverless, event-driven loyalty and rewards platform built on AWS Free Tier services. Designed for businesses to manage customer loyalty programs, points tracking, campaigns, and multi-channel notifications.
 
@@ -9,7 +9,7 @@ A serverless, event-driven loyalty and rewards platform built on AWS Free Tier s
 
 ---
 
-## 🎯 Executive Summary
+## Executive Summary
 
 The **Loyalty & Rewards System** is a serverless backend platform enabling businesses to automate customer loyalty programs, track reward points, and run engagement campaigns. Built for **scalability**, **cost-efficiency**, and **real-time performance** — it integrates seamlessly with e-commerce, POS, and CRM systems through secure webhooks and APIs.
 
@@ -17,7 +17,7 @@ The **Loyalty & Rewards System** is a serverless backend platform enabling busin
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Features](#features)
 - [Architecture](#architecture)
@@ -40,7 +40,7 @@ The **Loyalty & Rewards System** is a serverless backend platform enabling busin
 
 ---
 
-## ✨ Features
+## Features
 
 ### Business Features
 
@@ -63,7 +63,7 @@ The **Loyalty & Rewards System** is a serverless backend platform enabling busin
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ### High-Level Architecture Diagram
 
@@ -125,7 +125,7 @@ graph TD
 
 ---
 
-## 🔄 Use Cases & Workflows
+## Use Cases & Workflows
 
 ### Example Workflow 1: "User Makes a Purchase"
 
@@ -159,7 +159,7 @@ graph TD
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 | Component          | Technology                | Purpose                                | Free Tier Limit               |
 | ------------------ | ------------------------- | -------------------------------------- | ----------------------------- |
