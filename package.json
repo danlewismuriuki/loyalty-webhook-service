@@ -10,8 +10,20 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.156",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/ms": "^2.1.0",
     "@types/node": "^24.9.1",
+    "@types/uuid": "^10.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.917.0",
+    "@aws-sdk/client-eventbridge": "^3.917.0",
+    "@aws-sdk/lib-dynamodb": "^3.917.0",
+    "@aws-sdk/util-dynamodb": "^3.917.0",
+    "jsonwebtoken": "^9.0.2",
+    "uuid": "^13.0.0"
   }
 }

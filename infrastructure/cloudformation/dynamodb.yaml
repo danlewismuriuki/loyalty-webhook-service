@@ -1,0 +1,121 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "DynamoDB table for Loyalty System - Single Table Design"
+
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - staging
+      - prod
+    Description: Environment name
+
+  TableName:
+    Type: String
+    Default: loyalty-system-table
+    Description: Name of the DynamoDB table
+
+Resources:
+  # Main DynamoDB Table with Single Table Design
+  LoyaltySystemTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub "${TableName}-${Environment}"
+      BillingMode: PAY_PER_REQUEST # On-demand pricing (free tier: 25 RCU/WCU)
+
+      # Primary Key
+      AttributeDefinitions:
+        - AttributeName: PK
+          AttributeType: S
+        - AttributeName: SK
+          AttributeType: S
+        - AttributeName: GSI1PK
+          AttributeType: S
+        - AttributeName: GSI1SK
+          AttributeType: S
+        - AttributeName: GSI2PK
+          AttributeType: S
+        - AttributeName: GSI2SK
+          AttributeType: S
+
+      KeySchema:
+        - AttributeName: PK
+          KeyType: HASH
+        - AttributeName: SK
+          KeyType: RANGE
+
+      # Global Secondary Indexes
+      GlobalSecondaryIndexes:
+        # GSI1: For email lookups and entity type queries
+        - IndexName: GSI1
+          KeySchema:
+            - AttributeName: GSI1PK
+              KeyType: HASH
+            - AttributeName: GSI1SK
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+
+        # GSI2: For time-based queries and status filters
+        - IndexName: GSI2
+          KeySchema:
+            - AttributeName: GSI2PK
+              KeyType: HASH
+            - AttributeName: GSI2SK
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+
+      # Enable DynamoDB Streams for real-time events
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+
+      # TTL for automatic expiration (sessions, temp data)
+      TimeToLiveSpecification:
+        AttributeName: TTL
+        Enabled: true
+
+      # Point-in-time recovery (backup)
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+
+      # Tags
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Project
+          Value: LoyaltySystem
+        - Key: ManagedBy
+          Value: CloudFormation
+
+Outputs:
+  TableName:
+    Description: Name of the DynamoDB table
+    Value: !Ref LoyaltySystemTable
+    Export:
+      Name: !Sub "${AWS::StackName}-TableName"
+
+  TableArn:
+    Description: ARN of the DynamoDB table
+    Value: !GetAtt LoyaltySystemTable.Arn
+    Export:
+      Name: !Sub "${AWS::StackName}-TableArn"
+
+  TableStreamArn:
+    Description: ARN of the DynamoDB Stream
+    Value: !GetAtt LoyaltySystemTable.StreamArn
+    Export:
+      Name: !Sub "${AWS::StackName}-StreamArn"
+
+  GSI1Name:
+    Description: Name of GSI1
+    Value: GSI1
+    Export:
+      Name: !Sub "${AWS::StackName}-GSI1Name"
+
+  GSI2Name:
+    Description: Name of GSI2
+    Value: GSI2
+    Export:
+      Name: !Sub "${AWS::StackName}-GSI2Name"
