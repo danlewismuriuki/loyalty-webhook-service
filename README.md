@@ -161,9 +161,12 @@ graph TB
 
     dynamodb -->|Streams| lambda_worker
 
-    style external fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
-    style aws_free fill:#fce4ec,stroke:#c2185b,stroke-width:2px
-    style logic fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style external fill:#e3f2fd
+    style aws_free fill:#c8e6c9
+    style logic fill:#fff9c4
+
+    classDef freeService fill:#a5d6a7,stroke:#388e3c,stroke-width:3px
+    class apigw,lambda_webhook,lambda_api,lambda_worker,dynamodb,sqs_standard,sqs_fifo,sqs_dlq,s3,sns,ses,cloudwatch,eventbridge freeService
 ```
 
 ### Architecture Highlights
