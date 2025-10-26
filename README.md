@@ -1,10 +1,12 @@
 # Loyalty & Rewards System
 
-A serverless, event-driven loyalty and rewards platform built on AWS Free Tier services. Designed for businesses to manage customer loyalty programs, points tracking, campaigns, and multi-channel notifications.
+A **serverless**, **event-driven**, and **type-safe** loyalty and rewards platform built on **AWS Free Tier** services using **Node.js (20.x)** and **TypeScript**.  
+Designed for businesses to manage customer loyalty programs, points tracking, automated campaigns, and multi-channel notifications — all optimized for scalability and zero-cost prototyping.
 
 [![AWS Free Tier](https://img.shields.io/badge/AWS-Free%20Tier-green.svg)](https://aws.amazon.com/free/)
 [![Serverless](https://img.shields.io/badge/Architecture-Serverless-orange.svg)](https://aws.amazon.com/serverless/)
 [![Node.js](https://img.shields.io/badge/Node.js-20.x-brightgreen.svg)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ---
@@ -209,17 +211,20 @@ graph TB
 
 ## Technology Stack
 
-| Component          | Technology                | Purpose                                | Free Tier Limit               |
-| ------------------ | ------------------------- | -------------------------------------- | ----------------------------- |
-| **API Gateway**    | AWS API Gateway REST      | API endpoints + webhook receiver       | 1M requests/month             |
-| **Compute**        | AWS Lambda (Node.js 20.x) | Serverless function execution          | 1M invocations/month          |
-| **Database**       | Amazon DynamoDB           | NoSQL database (single table design)   | 25 GB storage, 25 RCU/WCU     |
-| **Queuing**        | Amazon SQS                | Async job processing (Standard + FIFO) | 1M requests/month             |
-| **Storage**        | Amazon S3                 | Webhook logs, templates, backups       | 5 GB storage                  |
-| **Notifications**  | Amazon SNS + SES          | Email, SMS, push notifications         | 62K emails/month (via Lambda) |
-| **Events**         | Amazon EventBridge        | Event routing and filtering            | Free for AWS events           |
-| **Monitoring**     | CloudWatch Logs + Metrics | Application monitoring and alarms      | 5 GB logs/month               |
-| **Authentication** | Custom JWT                | API security and user sessions         | N/A                           |
+| Layer                | Component / Technology         | Purpose / Role                                   | Free Tier Limit / Notes     |
+| -------------------- | ------------------------------ | ------------------------------------------------ | --------------------------- |
+| **Language**         | Node.js 20.x + TypeScript      | Core runtime & type-safe backend development     | Open source                 |
+| **Framework**        | AWS Lambda (Serverless)        | Execute business logic & API handlers            | 1M invocations/month FREE   |
+| **API Gateway**      | AWS API Gateway (REST)         | Public API endpoints & webhook receiver          | 1M requests/month FREE      |
+| **Database**         | Amazon DynamoDB (Single Table) | NoSQL data store for idempotency, logs, metadata | 25 GB storage FREE          |
+| **Queueing**         | Amazon SQS (Standard & FIFO)   | Async job & message handling                     | 1M requests/month FREE      |
+| **Events**           | Amazon EventBridge             | Event routing between services                   | Free for AWS events         |
+| **Storage**          | Amazon S3                      | Webhook payload logs, templates, exports         | 5 GB storage FREE           |
+| **Notifications**    | Amazon SNS + Amazon SES        | Email, SMS, and push notifications               | 62K emails/month FREE (SES) |
+| **Monitoring**       | CloudWatch Logs + Metrics      | Monitoring, error tracking, alarms               | 5 GB logs/month FREE        |
+| **Authentication**   | Custom JWT                     | Token-based auth for internal & external clients | N/A                         |
+| **IaC / Deployment** | AWS SAM or Terraform           | Infrastructure as Code (build, deploy, manage)   | Open source                 |
+| **Testing**          | Jest + AWS SDK Mocks           | Unit & integration testing                       | Open source                 |
 
 ---
 

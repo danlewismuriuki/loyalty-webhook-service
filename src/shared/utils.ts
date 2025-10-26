@@ -1,8 +1,5 @@
 import { APIResponse, ErrorResponse } from '../types/common.types';
 
-/**
- * Create a success API response
- */
 export function successResponse<T = any>(
   statusCode: number,
   body: Omit<APIResponse<T>, 'success'>
@@ -25,9 +22,6 @@ export function successResponse<T = any>(
   };
 }
 
-/**
- * Create an error API response
- */
 export function errorResponse(
   statusCode: number,
   message: string,
@@ -54,25 +48,16 @@ export function errorResponse(
   };
 }
 
-/**
- * Validate email format
- */
 export function isValidEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 }
 
-/**
- * Validate phone number (basic E.164 format)
- */
 export function isValidPhone(phone: string): boolean {
   const phoneRegex = /^\+?[1-9]\d{1,14}$/;
   return phoneRegex.test(phone);
 }
 
-/**
- * Generate a random string
- */
 export function generateRandomString(length: number = 32): string {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let result = '';
@@ -82,16 +67,10 @@ export function generateRandomString(length: number = 32): string {
   return result;
 }
 
-/**
- * Sleep for specified milliseconds
- */
 export function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-/**
- * Retry a function with exponential backoff
- */
 export async function retryWithBackoff<T>(
   fn: () => Promise<T>,
   maxRetries: number = 3,
@@ -110,14 +89,9 @@ export async function retryWithBackoff<T>(
       await sleep(delay);
     }
   }
-  
-  // TypeScript requires a return statement here, though it's unreachable
   throw new Error('Max retries exceeded');
 }
 
-/**
- * Parse query string parameters
- */
 export function parseQueryParams(queryString?: string): Record<string, string> {
   if (!queryString) return {};
 
@@ -128,9 +102,6 @@ export function parseQueryParams(queryString?: string): Record<string, string> {
   }, {} as Record<string, string>);
 }
 
-/**
- * Sanitize object by removing null/undefined values
- */
 export function sanitizeObject<T extends Record<string, any>>(obj: T): Partial<T> {
   return Object.entries(obj).reduce((acc, [key, value]) => {
     if (value !== null && value !== undefined) {
@@ -140,9 +111,6 @@ export function sanitizeObject<T extends Record<string, any>>(obj: T): Partial<T
   }, {} as Partial<T>);
 }
 
-/**
- * Format currency
- */
 export function formatCurrency(amount: number, currency: string = 'USD'): string {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -150,9 +118,6 @@ export function formatCurrency(amount: number, currency: string = 'USD'): string
   }).format(amount);
 }
 
-/**
- * Calculate percentage
- */
 export function calculatePercentage(value: number, total: number): number {
   if (total === 0) return 0;
   return Math.round((value / total) * 100 * 100) / 100; // Round to 2 decimals
